@@ -62,7 +62,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_udp_ip_address"
         android:text="@string/send_as"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginBottom="@dimen/elements_bottom_margin"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -71,7 +72,9 @@
         android:layout_alignTop="@+id/textView3"
         android:layout_toRightOf="@+id/textView3"
         android:gravity="right"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/elements_bottom_margin"
+        android:id="@+id/radioGroup">
 
         <RadioButton
             android:id="@+id/radioButton_udp_bytes"
@@ -85,4 +88,56 @@
             android:layout_height="wrap_content"
             android:text="@string/string" />
     </RadioGroup>
+
+    <TextView
+        android:layout_marginTop="@dimen/elements_bottom_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/message"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/elements_bottom_margin"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText_udp_message"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/elements_bottom_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/udp_message_instructions"
+        android:id="@+id/textView5"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="italic"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hex"
+        android:id="@+id/checkBox_udp_hex"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_below="@+id/editText_udp_message"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_action_send_now"
+        android:minWidth="50dp"
+        android:minHeight="50dp"/>
+
 </RelativeLayout>

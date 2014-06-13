@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.sumitgouthaman.socsend.app.UDPTCPActivity"
-            android:label="@string/title_activity_udptcp" >
+            android:label="@string/title_activity_udptcp"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

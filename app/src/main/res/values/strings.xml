@@ -15,5 +15,9 @@
     <string name="send_as">Send as</string>
     <string name="bytes">Bytes</string>
     <string name="string">String</string>
+    <string name="message">Message</string>
+    <string name="udp_message_instructions">When using \"Send as bytes\" the message field needs to contain byte values in range (0-255) or (00 to FF in case of hex) separated by space.</string>
+    <string name="hex">Hex</string>
+    <string name="send">Send</string>
 
 </resources>
