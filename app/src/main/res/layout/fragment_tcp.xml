@@ -83,6 +83,7 @@
             android:id="@+id/radioButton_tcp_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/string" />
     </RadioGroup>
     <TextView
@@ -128,7 +129,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButton_tcp_send"
         android:layout_below="@+id/editText_tcp_message"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

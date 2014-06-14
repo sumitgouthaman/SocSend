@@ -1,21 +1,25 @@
 package com.sumitgouthaman.socsend.app;
 
-import java.util.Locale;
-
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.sumitgouthaman.socsend.app.general_utils.Validation;
+
+import java.util.Locale;
 
 
 public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -71,14 +75,15 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+                            .setTabListener(this)
+            );
         }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.udptc, menu);
         return true;
@@ -109,6 +114,97 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            int section_number = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            View rootView = null;
+            switch (section_number) {
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_udp, container, false);
+                    setupUDP(rootView);
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_tcp, container, false);
+                    setupTCP(rootView);
+                    break;
+            }
+            return rootView;
+        }
+
+        private void setupUDP(final View rootView) {
+            ImageButton udpSend = (ImageButton) rootView.findViewById(R.id.imageButton_udp_send);
+            udpSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String ipAddress = ((EditText) rootView.findViewById(R.id.editText_udp_ip_address)).getText().toString().trim();
+                    String ipValidation = Validation.validateIP(getActivity(), ipAddress);
+                    if (!(ipValidation == null)) {
+                        Toast.makeText(getActivity(), ipValidation, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String portStr = ((EditText) rootView.findViewById(R.id.editText_udp_port)).getText().toString().trim();
+                    String portValidation = Validation.validatePort(getActivity(), portStr);
+                    if (!(portValidation == null)) {
+                        Toast.makeText(getActivity(), portValidation, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    int port = Integer.parseInt(portStr);
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.title_udp), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        private void setupTCP(final View rootView) {
+            ImageButton tcpSend = (ImageButton) rootView.findViewById(R.id.imageButton_tcp_send);
+            tcpSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String ipAddress = ((EditText) rootView.findViewById(R.id.editText_udp_ip_address)).getText().toString().trim();
+                    String ipValidation = Validation.validateIP(getActivity(), ipAddress);
+                    if (!(ipValidation == null)) {
+                        Toast.makeText(getActivity(), ipValidation, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String portStr = ((EditText) rootView.findViewById(R.id.editText_udp_port)).getText().toString().trim();
+                    String portValidation = Validation.validatePort(getActivity(), portStr);
+                    if (!(portValidation == null)) {
+                        Toast.makeText(getActivity(), portValidation, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    int port = Integer.parseInt(portStr);
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.title_tcp), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     /**
@@ -144,49 +240,6 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                     return getString(R.string.title_tcp).toUpperCase(l);
             }
             return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            int section_number = getArguments().getInt(ARG_SECTION_NUMBER);
-
-            View rootView = null;
-            switch (section_number){
-                case 1:
-                    rootView = inflater.inflate(R.layout.fragment_udp, container, false);
-                    break;
-                case 2:
-                    rootView = inflater.inflate(R.layout.fragment_tcp, container, false);
-                    break;
-            }
-            return rootView;
         }
     }
 

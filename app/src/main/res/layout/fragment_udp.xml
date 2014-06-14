@@ -80,6 +80,7 @@
             android:id="@+id/radioButton_udp_bytes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/bytes" />
 
         <RadioButton
@@ -132,7 +133,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButton_udp_send"
         android:layout_below="@+id/editText_udp_message"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
