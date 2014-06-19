@@ -13,11 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.sumitgouthaman.socsend.app.general_utils.EndPoint;
+import com.sumitgouthaman.socsend.app.general_utils.ParseMessage;
 import com.sumitgouthaman.socsend.app.general_utils.Validation;
+import com.sumitgouthaman.socsend.app.socket_utils.UDPSender;
 
 import java.util.Locale;
 
@@ -178,7 +183,32 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                         return;
                     }
                     int port = Integer.parseInt(portStr);
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.title_udp), Toast.LENGTH_SHORT).show();
+                    String message = ((EditText) rootView.findViewById(R.id.editText_udp_message)).getText().toString();
+                    RadioButton udpBytes = (RadioButton) rootView.findViewById(R.id.radioButton_udp_bytes);
+                    if (udpBytes.isChecked()) {
+                        CheckBox hexFormat = (CheckBox) rootView.findViewById(R.id.checkBox_udp_hex);
+                        byte[] bytes;
+                        if (!hexFormat.isChecked()) {
+                            bytes = ParseMessage.parseBytes(message);
+                        } else {
+                            bytes = ParseMessage.parseBytesHex(message);
+                        }
+                        if (!(bytes == null)) {
+                            EndPoint endPoint = new EndPoint(ipAddress, port);
+                            UDPSender.send(endPoint, bytes);
+                        } else {
+                            Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } else {
+                        if (message.length() > 0) {
+                            Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            EndPoint endPoint = new EndPoint(ipAddress, port);
+                            UDPSender.send(endPoint, message);
+                        }
+                    }
                 }
             });
         }

@@ -19,10 +19,11 @@
     <string name="udp_message_instructions">When using \"Send as bytes\" the message field needs to contain byte values in range (0-255) or (00 to FF in case of hex) separated by space.</string>
     <string name="hex">Hex</string>
     <string name="send">Send</string>
-    <string name="ip_blank">IP Address in blank</string>
+    <string name="ip_blank">IP Address is blank</string>
     <string name="ip_pattern_incorrect">IP pattern incorrect</string>
-    <string name="port_empty">Port in empty</string>
+    <string name="port_empty">Port is empty</string>
     <string name="port_value_invalid">Value of port is invalid</string>
     <string name="port_not_integer">Port is not a valid integer</string>
+    <string name="message_invalid">Message invalid</string>
 
 </resources>
