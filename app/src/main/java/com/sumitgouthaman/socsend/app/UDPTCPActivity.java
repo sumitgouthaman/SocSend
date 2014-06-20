@@ -195,7 +195,7 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                         }
                         if (!(bytes == null)) {
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            UDPSender.send(endPoint, bytes);
+                            //UDPSender.send(endPoint, bytes); //Needs asynctask
                         } else {
                             Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
                             return;
@@ -206,7 +206,7 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                             return;
                         } else {
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            UDPSender.send(endPoint, message);
+                            //UDPSender.send(endPoint, message); //Needs asynctask
                         }
                     }
                 }
