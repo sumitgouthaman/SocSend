@@ -23,6 +23,7 @@ import com.sumitgouthaman.socsend.app.general_utils.EndPoint;
 import com.sumitgouthaman.socsend.app.general_utils.ParseMessage;
 import com.sumitgouthaman.socsend.app.general_utils.Validation;
 import com.sumitgouthaman.socsend.app.socket_utils.UDPSender;
+import com.sumitgouthaman.socsend.app.tasks.SendUDPTask;
 
 import java.util.Locale;
 
@@ -195,7 +196,9 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                         }
                         if (!(bytes == null)) {
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            //UDPSender.send(endPoint, bytes); //Needs asynctask
+                            SendUDPTask sendUDPTask = new SendUDPTask(bytes);
+                            sendUDPTask.setContext(getActivity());
+                            sendUDPTask.execute(endPoint);
                         } else {
                             Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
                             return;
@@ -206,7 +209,9 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                             return;
                         } else {
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            //UDPSender.send(endPoint, message); //Needs asynctask
+                            SendUDPTask sendUDPTask = new SendUDPTask(message);
+                            sendUDPTask.setContext(getActivity());
+                            sendUDPTask.execute(endPoint);
                         }
                     }
                 }

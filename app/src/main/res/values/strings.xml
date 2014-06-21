@@ -25,5 +25,6 @@
     <string name="port_value_invalid">Value of port is invalid</string>
     <string name="port_not_integer">Port is not a valid integer</string>
     <string name="message_invalid">Message invalid</string>
+    <string name="sent">Sent</string>
 
 </resources>
