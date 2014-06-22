@@ -47,4 +47,8 @@ public class UDPSender {
     public static void send(EndPoint endPoint, String string) {
         send(endPoint, string.getBytes());
     }
+
+    public static byte[] sendWait(EndPoint endPoint, String string) {
+        return sendWait(endPoint, string.getBytes());
+    }
 }
