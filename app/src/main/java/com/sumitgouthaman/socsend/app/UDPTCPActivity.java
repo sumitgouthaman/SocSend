@@ -205,13 +205,13 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                         }
                     } else {
                         if (message.length() > 0) {
-                            Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
                             EndPoint endPoint = new EndPoint(ipAddress, port);
                             SendUDPTask sendUDPTask = new SendUDPTask(message);
                             sendUDPTask.setContext(getActivity());
                             sendUDPTask.execute(endPoint);
+                        } else {
+                            Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
+                            return;
                         }
                     }
                 }
