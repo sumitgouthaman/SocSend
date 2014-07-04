@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
-import com.sumitgouthaman.socsend.app.R;
 import com.sumitgouthaman.socsend.app.general_utils.EndPoint;
 import com.sumitgouthaman.socsend.app.socket_utils.UDPSender;
 
@@ -50,7 +48,11 @@ public class SendUDPWaitTask extends AsyncTask<EndPoint, Void, Void> {
             if (handler != null) {
                 Message message = Message.obtain();
                 message.obj = result;
-                handler.sendMessage(message);
+                try {
+                    handler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return null;
@@ -59,8 +61,5 @@ public class SendUDPWaitTask extends AsyncTask<EndPoint, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if (context != null) {
-            Toast.makeText(context, R.string.sent, Toast.LENGTH_SHORT).show();
-        }
     }
 }

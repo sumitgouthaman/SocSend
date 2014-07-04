@@ -130,6 +130,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/expect_reply"
+        android:id="@+id/checkBox_udp_expect_reply"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_toLeftOf="@id/checkBox_udp_hex" />
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

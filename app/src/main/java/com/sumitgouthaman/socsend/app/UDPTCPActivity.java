@@ -1,6 +1,9 @@
 package com.sumitgouthaman.socsend.app;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,7 +27,9 @@ import com.sumitgouthaman.socsend.app.general_utils.ParseMessage;
 import com.sumitgouthaman.socsend.app.general_utils.Validation;
 import com.sumitgouthaman.socsend.app.socket_utils.UDPSender;
 import com.sumitgouthaman.socsend.app.tasks.SendUDPTask;
+import com.sumitgouthaman.socsend.app.tasks.SendUDPWaitTask;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 
@@ -195,20 +200,58 @@ public class UDPTCPActivity extends ActionBarActivity implements ActionBar.TabLi
                             bytes = ParseMessage.parseBytesHex(message);
                         }
                         if (!(bytes == null)) {
+                            CheckBox expectReply = (CheckBox)rootView.findViewById(R.id.checkBox_udp_expect_reply);
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            SendUDPTask sendUDPTask = new SendUDPTask(bytes);
-                            sendUDPTask.setContext(getActivity());
-                            sendUDPTask.execute(endPoint);
+                            if(!expectReply.isChecked()){
+                                SendUDPTask sendUDPTask = new SendUDPTask(bytes);
+                                sendUDPTask.setContext(getActivity());
+                                sendUDPTask.execute(endPoint);
+                            }else{
+                                Handler replyHandler = new Handler(new Handler.Callback() {
+                                    @Override
+                                    public boolean handleMessage(Message message) {
+                                        byte[] reply = (byte[]) message.obj;
+                                        String replyStr = Arrays.toString(reply);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage(replyStr)
+                                                .setTitle(R.string.recd_reply);
+                                        builder.show();
+                                        return true;
+                                    }
+                                });
+                                SendUDPWaitTask sendUDPWaitTask = new SendUDPWaitTask(bytes, replyHandler);
+                                sendUDPWaitTask.setContext(getActivity());
+                                sendUDPWaitTask.execute(endPoint);
+                            }
                         } else {
                             Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
                             return;
                         }
                     } else {
                         if (message.length() > 0) {
+                            CheckBox expectReply = (CheckBox)rootView.findViewById(R.id.checkBox_udp_expect_reply);
                             EndPoint endPoint = new EndPoint(ipAddress, port);
-                            SendUDPTask sendUDPTask = new SendUDPTask(message);
-                            sendUDPTask.setContext(getActivity());
-                            sendUDPTask.execute(endPoint);
+                            if(!expectReply.isChecked()){
+                                SendUDPTask sendUDPTask = new SendUDPTask(message);
+                                sendUDPTask.setContext(getActivity());
+                                sendUDPTask.execute(endPoint);
+                            }else{
+                                Handler replyHandler = new Handler(new Handler.Callback() {
+                                    @Override
+                                    public boolean handleMessage(Message message) {
+                                        byte[] reply = (byte[]) message.obj;
+                                        String replyStr = Arrays.toString(reply);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage(replyStr)
+                                                .setTitle(R.string.recd_reply);
+                                        builder.show();
+                                        return true;
+                                    }
+                                });
+                                SendUDPWaitTask sendUDPWaitTask = new SendUDPWaitTask(message, replyHandler);
+                                sendUDPWaitTask.setContext(getActivity());
+                                sendUDPWaitTask.execute(endPoint);
+                            }
                         } else {
                             Toast.makeText(getActivity(), R.string.message_invalid, Toast.LENGTH_SHORT).show();
                             return;

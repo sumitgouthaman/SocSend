@@ -26,5 +26,7 @@
     <string name="port_not_integer">Port is not a valid integer</string>
     <string name="message_invalid">Message invalid</string>
     <string name="sent">Sent</string>
+    <string name="expect_reply">Expect reply</string>
+    <string name="recd_reply">Received reply</string>
 
 </resources>
